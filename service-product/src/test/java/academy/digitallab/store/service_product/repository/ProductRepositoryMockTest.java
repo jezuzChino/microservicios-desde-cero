@@ -1,10 +1,7 @@
-package academy.digitallab.store.service_product;
+package academy.digitallab.store.service_product.repository;
 
 import academy.digitallab.store.service_product.entity.Category;
 import academy.digitallab.store.service_product.entity.Product;
-import academy.digitallab.store.service_product.repository.ProductRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
