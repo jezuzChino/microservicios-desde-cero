@@ -3,9 +3,7 @@ package academy.digitallab.store.service_shopping.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +13,8 @@ import java.util.List;
 @Table(name="tbl_invoices")
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class Invoice {
 
     @Id
@@ -41,6 +41,9 @@ public class Invoice {
     private List<InvoiceItem> items;
 
     private String state;
+
+//    @Transient
+//    private Customer customer;
 
     public Invoice(){
         items = new ArrayList<>();
