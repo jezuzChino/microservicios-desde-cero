@@ -39,4 +39,10 @@ public class ProductServiceImplMockTest {
         Mockito.when(productRepository.findById(1L))
                 .thenReturn(Optional.of(computer));
     }
+
+    @Test
+    public void whenValidGetId_ThenReturnProduct() {
+        Product found = productService.getProduct(1L);
+        Assertions.assertEquals("computer", found.getName());
+    }
 }
