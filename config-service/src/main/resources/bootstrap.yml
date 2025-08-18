@@ -1,1 +1,16 @@
-spring.application.name=config-service
+server:
+  port: 8081
+# Se agregan la rutas de los archivos de configuración de los microservicios
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/digitallab-academy/ms-course-youtube.git
+          searchPath: config-data
+          username: ${GITHUB_USERNAME}
+          password: ${GITHUB_PASSWORD}
+
+  security:
+    name: root
+    password: s3cr3t
