@@ -4,8 +4,12 @@ import academy.digitallab.store.service_product.entity.Category;
 import academy.digitallab.store.service_product.entity.Product;
 import academy.digitallab.store.service_product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +45,11 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(product);
+    }
+
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        Product productCreated = productService.createProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productCreated); // Retorna 201 Created
     }
 }
