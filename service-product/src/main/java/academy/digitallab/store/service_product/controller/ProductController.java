@@ -52,4 +52,14 @@ public class ProductController {
         Product productCreated = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(productCreated); // Retorna 201 Created
     }
+
+    @PutMapping(value = "/{id}") // Anotación que indica que este metodo maneja peticiones PUT
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+        product.setId(id); // Aseguramos que el ID del producto a actualizar sea el correcto
+        Product productDB = productService.updateProduct(product);
+        if (productDB == null) {
+            return ResponseEntity.notFound().build(); // Retorna 404 Not Found si no se encontró el producto
+        }
+        return ResponseEntity.ok(productDB); // Retorna 200 OK con el producto actualizado
+    }
 }
