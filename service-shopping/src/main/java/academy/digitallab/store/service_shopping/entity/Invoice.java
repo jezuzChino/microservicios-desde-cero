@@ -36,8 +36,7 @@ public class Invoice {
 
     @Valid
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // de uno a muchos, cascade all para que se guarde en cascada
-    @JoinColumn(name = "invoice_id")
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL) // de uno a muchos, cascade all para que se guarde en cascada
     private List<InvoiceItem> items;
 
     private String state;

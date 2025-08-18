@@ -1,5 +1,7 @@
 package academy.digitallab.store.service_shopping.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
@@ -24,6 +26,10 @@ public class InvoiceItem {
     @Column(name = "product_id")
     private Long productId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id", nullable = false)
+    @JsonIgnore
+    private Invoice invoice;
 
     @Transient // no se mapea a la base de datos
     private Double subTotal;

@@ -45,6 +45,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 //        });
 //
 //        return invoiceDB;
+        if (invoice.getItems() != null) {
+            invoice.getItems().forEach(item -> item.setInvoice(invoice));
+        }
         return invoiceRepository.save(invoice);
     }
 
