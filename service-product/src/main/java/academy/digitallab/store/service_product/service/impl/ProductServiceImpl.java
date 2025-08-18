@@ -3,17 +3,21 @@ package academy.digitallab.store.service_product.service.impl;
 import academy.digitallab.store.service_product.entity.Product;
 import academy.digitallab.store.service_product.repository.ProductRepository;
 import academy.digitallab.store.service_product.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor // Indica a Lombok que genere un constructor con los campos finales (final) como parámetros
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired // Autowired to inject the ProductRepository bean
+    //@Autowired // Autowired to inject the ProductRepository bean
     // Note: In a real application, you would typically use @Service annotation on this class
     // and @Autowired on the repository field.
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<Product> listAllProducts() {
