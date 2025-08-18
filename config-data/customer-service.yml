@@ -1,0 +1,44 @@
+#Aplication Configuration
+server:
+  port: 8092 # Setting the server port to 8092
+  error:
+    include-message: always # Always include error messages in the response
+    include-binding-errors: always # Always include binding errors in the response
+    include-stacktrace: never # Never include stack trace in the response
+# To see h2 Consolse in Browser:
+# http://localhost:8092/h2-console
+# Enabling h2 Console
+spring:
+  h2:
+    console:
+      enabled: true
+  # ==================================
+  # Database Configuration
+  # ==================================
+  datasource:
+    url: jdbc:h2:mem:customerDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # customerDB is the name of the in-memory database
+    driver-class-name: org.h2.Driver # H2 Database Driver
+    platform: h2
+    username: sa
+    password:
+
+  # ===================================
+  # JPA Configuration / Hibernate Configuration
+  # ===================================
+  jpa:
+    hibernate:
+      ddl-auto: update # Automatically update the database schema / en etapa de produccion se recomienda usar validate
+    show-sql: true # Show SQL queries in the console
+    database-platform: org.hibernate.dialect.H2Dialect # H2 Database Dialect / base de datos con la que se esta trabajando
+    properties:
+      hibernate:
+        show_sql: true # Show SQL queries in the console
+        use_sql_comments: false # Disable SQL comments
+        format_sql: false # Disable SQL formatting
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n" # Log pattern / como se mostraran los logs en la consola
+    #level:
+    # org.hibernate.SQL: DEBUG # Show SQL queries in the console
+    #org.hibernate.type.descriptor.sql.BasicBinder: TRACE # Show SQL parameters in the console
