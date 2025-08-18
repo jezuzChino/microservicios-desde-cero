@@ -1,5 +1,6 @@
 package academy.digitallab.store.service_product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,7 +34,8 @@ public class Product {
     private Date createAt;
 
     //Definir la estrategia -- fetch EAGER carga todos los valores de todas las categorias, LAZY solo cargara en el momento que se requieran.
-    @ManyToOne (fetch = FetchType.LAZY) //Mapear la entindad productos con la entidad categoria y es una relación de "Muchos a uno, Una categoria tiene muchos productos"
-    @JoinColumn (name = "category_id") //Mapeo de las columnas
+    @ManyToOne(fetch = FetchType.LAZY) //Mapear la entindad productos con la entidad categoria y es una relación de "Muchos a uno, Una categoria tiene muchos productos"
+    @JoinColumn(name = "category_id") //Mapeo de las columnas
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) //Para evitar problemas de serialización con Hibernate
     private Category category;
 }
