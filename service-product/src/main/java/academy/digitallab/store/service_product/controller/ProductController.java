@@ -62,4 +62,13 @@ public class ProductController {
         }
         return ResponseEntity.ok(productDB); // Retorna 200 OK con el producto actualizado
     }
+
+    @DeleteMapping(value = "/{id}") // Anotación que indica que este metodo maneja peticiones DELETE
+    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id) {
+        Product productDB = productService.deleteProduct(id);
+        if (productDB == null) {
+            return ResponseEntity.notFound().build(); // Retorna 404 Not Found si no se encontró el producto
+        }
+        return ResponseEntity.ok(productDB); // Retorna 200 OK con el producto eliminado
+    }
 }
