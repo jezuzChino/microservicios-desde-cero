@@ -12,8 +12,9 @@ spring:
           username: ${GITHUB_USERNAME}
           password: ${GITHUB_PASSWORD}
   security:
-    name: root
-    password: s3cr3t
+    user:
+      name: root
+      password: s3cr3t
 
 logging:
   level:
