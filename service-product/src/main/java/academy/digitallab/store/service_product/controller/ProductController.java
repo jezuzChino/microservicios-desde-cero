@@ -5,9 +5,7 @@ import academy.digitallab.store.service_product.entity.Product;
 import academy.digitallab.store.service_product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +32,14 @@ public class ProductController {
             }
         }
         return ResponseEntity.ok(products); // Retorna 200 OK con la lista de productos
+    }
+
+    @GetMapping(value = "/{id}") // Anotación que indica que este metodo maneja peticiones GET con un ID de producto
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) { // Anotación @PathVariable para extraer el ID del producto de la URL
+        Product product = productService.getProduct(id);
+        if(product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(product);
     }
 }
