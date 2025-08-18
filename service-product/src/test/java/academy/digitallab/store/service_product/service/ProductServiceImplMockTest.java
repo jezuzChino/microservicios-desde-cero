@@ -38,11 +38,19 @@ public class ProductServiceImplMockTest {
 
         Mockito.when(productRepository.findById(1L))
                 .thenReturn(Optional.of(computer));
+
+        Mockito.when(productRepository.save(computer)).thenReturn(computer); // Simula el comportamiento del método save del repositorio
     }
 
     @Test
     public void whenValidGetId_ThenReturnProduct() {
         Product found = productService.getProduct(1L);
         Assertions.assertEquals("computer", found.getName());
+    }
+
+    @Test
+    public void whenValidUpdateStock_ThenReturnNewStock() {
+        Product newStock = productService.updateStock(1L, Double.parseDouble("10"));
+        Assertions.assertEquals(15, newStock.getStock());
     }
 }
