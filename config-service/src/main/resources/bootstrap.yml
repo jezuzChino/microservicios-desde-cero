@@ -1,16 +1,22 @@
 server:
   port: 8081
-# Se agregan la rutas de los archivos de configuración de los microservicios
+# Se agregan la rutas de los archivos de configuracion de los microservicios
 spring:
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/digitallab-academy/ms-course-youtube.git
+          #default-label: main
+          uri: https://github.com/jezuzChino/microservicios-desde-cero.git
           searchPaths: config-data
           username: ${GITHUB_USERNAME}
           password: ${GITHUB_PASSWORD}
-
   security:
     name: root
     password: s3cr3t
+
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
