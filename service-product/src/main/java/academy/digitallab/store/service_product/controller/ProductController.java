@@ -71,4 +71,13 @@ public class ProductController {
         }
         return ResponseEntity.ok(productDB); // Retorna 200 OK con el producto eliminado
     }
+
+    @GetMapping(value = "/{id}/stock") // Ruta para actualizar el stock de un producto
+    public ResponseEntity<Product> updateStockProduct(@PathVariable Long id, @RequestParam(name = "quantity", required = true) Double quantity) {
+        Product productDB = productService.updateStock(id, quantity);
+        if (productDB == null) {
+            return ResponseEntity.notFound().build(); // Retorna 404 Not Found si no se encontró el producto
+        }
+        return ResponseEntity.ok(productDB); // Retorna 200 OK con el producto actualizado
+    }
 }
