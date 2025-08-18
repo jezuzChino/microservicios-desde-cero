@@ -3,6 +3,8 @@ package academy.digitallab.store.service_product.controller;
 import academy.digitallab.store.service_product.entity.Category;
 import academy.digitallab.store.service_product.entity.Product;
 import academy.digitallab.store.service_product.service.ProductService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController // Anotación que indica que esta clase es un controlador REST
 @RequestMapping (value = "/products")// Ruta base para las peticiones a este controlador
@@ -48,7 +53,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product, BindingResult result) { // Anotación @Valid para validar el objeto Product y BindingResult para capturar los errores de validación
+        if (result.hasErrors()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
+        }
         Product productCreated = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(productCreated); // Retorna 201 Created
     }
@@ -79,5 +87,28 @@ public class ProductController {
             return ResponseEntity.notFound().build(); // Retorna 404 Not Found si no se encontró el producto
         }
         return ResponseEntity.ok(productDB); // Retorna 200 OK con el producto actualizado
+    }
+
+    private String formatMessage(BindingResult result) { // Método para formatear los mensajes de error de validación
+        List<Map<String, String>> errors = result.getFieldErrors().stream() // Obtener los errores de los campos
+                .map(err -> {
+                    Map<String,String> error = new HashMap<>(); // Crear un mapa para cada error
+                    error.put(err.getField(), err.getDefaultMessage()); // Agregar el nombre del campo y el mensaje de error al mapa
+                    return error;
+                }).collect(Collectors.toList()); // Colectar todos los mapas en una lista
+
+        ErrorMessage errorMessage = ErrorMessage.builder()
+                .code("01")
+                .messages(errors) // Asignar la lista de errores al objeto ErrorMessage
+                .build();
+        // Convertir el objeto ErrorMessage a JSON
+        ObjectMapper objectMapper = new ObjectMapper(); // Usamos ObjectMapper para convertir el objeto a JSON
+        String jsonErrorMessage = "";
+        try {
+            jsonErrorMessage = objectMapper.writeValueAsString(errorMessage); // Convertimos el objeto ErrorMessage a JSON
+        } catch (Exception e) {
+            e.printStackTrace(); // Imprimir la traza de la excepción en caso de error al convertir a JSON
+        }
+        return jsonErrorMessage; // Retornamos el mensaje de error en formato JSON
     }
 }

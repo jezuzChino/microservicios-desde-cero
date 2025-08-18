@@ -2,6 +2,9 @@ package academy.digitallab.store.service_product.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.util.Date;
@@ -19,12 +22,15 @@ public class Product {
     @GeneratedValue (strategy = GenerationType.IDENTITY) //Valor autoincremental y se selecciona la estrategia de generación
     private Long id;
 
+    @NotEmpty(message = "El nombre no debe ser vacio") //Validación para que el campo no sea vacio
     private String name;
 
     private String description;
 
+    @Positive(message = "El stock debe ser un valor mayor a cero") //Validación para que el campo sea positivo
     private Double stock;
 
+    @Positive(message = "El precio debe ser un valor mayor a cero") //Validación para que el campo sea positivo
     private Double price;
 
     private String status;
@@ -33,6 +39,7 @@ public class Product {
     @Temporal(TemporalType.TIMESTAMP) //Para trabajar con fechas (DATE = fecha, Time = hora, TIMESTAMP= fecha y hora)
     private Date createAt;
 
+    @NotNull(message = "La categoria no debe ser nula") //Validación para que el campo no sea nulo
     //Definir la estrategia -- fetch EAGER carga todos los valores de todas las categorias, LAZY solo cargara en el momento que se requieran.
     @ManyToOne(fetch = FetchType.LAZY) //Mapear la entindad productos con la entidad categoria y es una relación de "Muchos a uno, Una categoria tiene muchos productos"
     @JoinColumn(name = "category_id") //Mapeo de las columnas
