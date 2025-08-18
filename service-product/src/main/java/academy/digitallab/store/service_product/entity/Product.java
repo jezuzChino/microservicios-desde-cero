@@ -1,11 +1,17 @@
 package academy.digitallab.store.service_product.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity //Para definir nuestra clase como una entidad
 @Table (name = "tbl_products") //Si el nombre de nuestra tabla es distinta al nombre de la clase, para definir el nombre de nuestra tabla
+@Getter
+@Setter
+@AllArgsConstructor //Para generar un constructor con todos los atributos de la clase
+@NoArgsConstructor //Para generar un constructor sin atributos, es decir, un constructor por defecto
+@Builder //Para generar un constructor con los atributos que se le pasen como parámetros, es decir, un constructor por builder
 public class Product {
 
     @Id //Para definir la llave primaria
