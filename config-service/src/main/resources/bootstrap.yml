@@ -11,6 +11,7 @@ spring:
           searchPaths: config-data
           username: ${GITHUB_USERNAME}
           password: ${GITHUB_PASSWORD}
+          default-label: main
   security:
     user:
       name: root
