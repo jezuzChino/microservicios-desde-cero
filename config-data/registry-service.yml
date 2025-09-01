@@ -1,0 +1,15 @@
+server:
+  port: 8099 # Setting the server port to 8092
+  error:
+    include-message: always # Always include error messages in the response
+    include-binding-errors: always # Always include binding errors in the response
+    include-stacktrace: never # Never include stack trace in the response
+
+eurekaa:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false # Do not register with Eureka server
+    fetch-registry: false # Do not fetch registry from Eureka server
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/ # URL of the Eureka server
