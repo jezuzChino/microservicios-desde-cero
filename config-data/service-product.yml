@@ -42,3 +42,8 @@ logging:
     #level:
     # org.hibernate.SQL: DEBUG # Show SQL queries in the console
     #org.hibernate.type.descriptor.sql.BasicBinder: TRACE # Show SQL parameters in the console
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8099/eureka/ # URL of the Eureka server

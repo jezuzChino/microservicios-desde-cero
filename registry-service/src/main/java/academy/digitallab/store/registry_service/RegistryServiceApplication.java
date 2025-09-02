@@ -2,7 +2,9 @@ package academy.digitallab.store.registry_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
+@EnableEurekaServer // Habilita el servidor de Eureka
 @SpringBootApplication
 public class RegistryServiceApplication {
 
