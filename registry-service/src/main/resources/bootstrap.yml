@@ -1,1 +1,9 @@
-spring.application.name=registry-service
+# Configuration for Spring Cloud Config Client, to connect to the Config Server
+spring:
+  application:
+    name: registry-service
+  cloud:
+    config:
+      uri: http://localhost:8081
+      username: root
+      password: s3cr3t
