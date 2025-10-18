@@ -7,3 +7,12 @@ spring:
       uri: http://localhost:8081
       username: root
       password: s3cr3t
+
+eureka:
+  client:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.cloud.openfeign: DEBUG
+    feign: DEBUG
