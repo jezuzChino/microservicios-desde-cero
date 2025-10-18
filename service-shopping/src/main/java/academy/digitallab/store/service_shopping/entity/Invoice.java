@@ -1,5 +1,7 @@
 package academy.digitallab.store.service_shopping.entity;
 
+import academy.digitallab.store.service_shopping.model.customer.Customer;
+import academy.digitallab.store.service_shopping.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -41,8 +43,11 @@ public class Invoice {
 
     private String state;
 
-//    @Transient
-//    private Customer customer;
+    @Transient// para que no se guarde en la base de datos
+    private Customer customer;
+
+    @Transient // para que no se guarde en la base de datos
+    private Product product;
 
     public Invoice(){
         items = new ArrayList<>();

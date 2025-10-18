@@ -1,10 +1,13 @@
 package academy.digitallab.store.service_shopping.entity;
 
+import academy.digitallab.store.service_shopping.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="tbl_invoice_items")
@@ -34,8 +37,8 @@ public class InvoiceItem {
     @Transient // no se mapea a la base de datos
     private Double subTotal;
 
-//    @Transient
-//    private Product product;
+    @Transient // para que no se guarde en la base de datos
+    private Product product;
 
     public Double getSubTotal(){
         if (this.price >0  && this.quantity >0 ){
