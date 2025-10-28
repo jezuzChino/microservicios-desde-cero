@@ -1,10 +1,12 @@
 package academy.digitallab.store.service_shopping.model.customer;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class Customer {
 
     private Long id;

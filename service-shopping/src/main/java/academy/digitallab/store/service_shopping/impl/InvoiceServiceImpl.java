@@ -9,8 +9,10 @@ import academy.digitallab.store.service_shopping.model.product.Product;
 import academy.digitallab.store.service_shopping.repository.InvoiceItemsRepository;
 import academy.digitallab.store.service_shopping.repository.InvoiceRepository;
 import academy.digitallab.store.service_shopping.service.InvoiceService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,12 +80,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @CircuitBreaker(name = "service-customer", fallbackMethod = "fallbackCustomer")
     public Invoice getInvoice(Long id) {
-
         Invoice invoice= invoiceRepository.findById(id).orElse(null);
         if (null != invoice ){
             var cus = invoice.getCustomerId();
-            log.info("EL VALOR DEL ID DEL CLEINTE ES:" + cus);
+            log.info("EL VALOR DEL ID DEL CLIENTE ES:" + cus);
             Customer customer = customerClient.getCustomer(cus).getBody();
             invoice.setCustomer(customer);
             List<InvoiceItem> listItem=invoice.getItems().stream().map(invoiceItem -> {
@@ -94,5 +96,24 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice.setItems(listItem);
         }
         return invoice ;
+    }
+
+    // Fallback que coincide con la firma del método principal
+    public Invoice fallbackCustomer(Long id, Throwable t) {
+        Invoice invoice = invoiceRepository.findById(id).orElse(null);
+        if (invoice != null) {
+            Customer defaultCustomer = Customer.builder()
+                .id(1L)
+                .numberID("none")
+                .firstName("none")
+                .lastName("none")
+                .email("none")
+                .photoUrl("none")
+                .state("none")
+                .build();
+            invoice.setCustomer(defaultCustomer);
+        }
+        log.error("Fallback activado para getInvoice con id {}. Excepción: {}", id, t.toString());
+        return invoice;
     }
 }
