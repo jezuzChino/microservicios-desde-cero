@@ -47,3 +47,24 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8099/eureka/ # URL of the Eureka server
+
+#feign: # ya no es necesario agregar esta configuracion en las versiones recientes de Spring Cloud
+#  hystrix: actualmente no es necesario usar Hystrix, se recomienda usar Resilience4j
+#    enabled: true # Enable Hystrix for Feign clients
+resilience4j:
+  circuitbreaker:
+    instances:
+      myFeignClient:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
