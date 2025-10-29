@@ -16,3 +16,7 @@ logging:
   level:
     org.springframework.cloud.openfeign: DEBUG
     feign: DEBUG
+
+feign:
+  circuitbreaker:
+    enabled: true
