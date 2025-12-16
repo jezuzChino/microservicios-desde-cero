@@ -2,7 +2,6 @@ package academy.digitallab.store.service_shopping.client;
 
 import academy.digitallab.store.service_shopping.model.customer.Customer;
 import academy.digitallab.store.service_shopping.model.customer.Region;
-//import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.http.ResponseEntity;

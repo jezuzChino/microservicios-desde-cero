@@ -86,23 +86,23 @@ public class InvoiceServiceImpl implements InvoiceService {
         if (invoice != null) {
             var cus = invoice.getCustomerId();
             log.info("EL VALOR DEL ID DEL CLIENTE ES:" + cus);
-            try {
+//            try {
                 Customer customer = customerClient.getCustomer(cus).getBody();
                 invoice.setCustomer(customer);
-            } catch (Exception e) {
-                log.error("Error al obtener el cliente desde CustomerClient. Se asigna cliente por defecto. Excepción: {}", e.toString());
-                Customer defaultCustomer = Customer.builder()
-                        .id(1L)
-                        .numberID("none")
-                        .firstName("none")
-                        .lastName("none")
-                        .email("none")
-                        .photoUrl("none")
-                        .region(null)
-                        .state("none")
-                        .build();
-                invoice.setCustomer(defaultCustomer);
-            }
+//            } catch (Exception e) {
+//                log.error("Error al obtener el cliente desde CustomerClient. Se asigna cliente por defecto. Excepción: {}", e.toString());
+//                Customer defaultCustomer = Customer.builder()
+//                        .id(1L)
+//                        .numberID("none")
+//                        .firstName("none")
+//                        .lastName("none")
+//                        .email("none")
+//                        .photoUrl("none")
+//                        .region(null)
+//                        .state("none")
+//                        .build();
+//                invoice.setCustomer(defaultCustomer);
+//            }
             List<InvoiceItem> listItem = invoice.getItems().stream().map(invoiceItem -> {
                 Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
                 invoiceItem.setProduct(product);
